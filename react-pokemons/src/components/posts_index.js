@@ -6,14 +6,36 @@ import {fetchImg} from "../actions/fetchImg";
 import Post from './post';
 import IMG from '../img/Ukulele-Pichu.jpg';
 
+
 import FontIcon from 'material-ui/FontIcon';
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {Dropdown, Input} from 'semantic-ui-react';
 
-const recentsIcon = <FontIcon className="material-icons">restore</FontIcon>;
-const favoritesIcon = <FontIcon className="material-icons">favorite</FontIcon>;
+const recentsIcon = <FontIcon  className=" list-icon"></FontIcon>;
+const favoritesIcon = <FontIcon className="fav-icon"></FontIcon>;
 
-//import { Dropdown, Input } from 'semantic-ui-react';
+
+const tagOptions = [
+    {
+        text: 'Important',
+        value: 'Important',
+        label: {color: 'green', empty: true, circular: true},
+    }
+];
+
+const DropdownExampleSearchInMenu = () => (
+    <Dropdown text='Filter Posts' icon='filter' floating labeled button className='icon'>
+        <Dropdown.Menu>
+            <Input icon='search' iconPosition='left' className='search'/>
+            <Dropdown.Divider/>
+            <Dropdown.Header icon='tags' content='Tag Label'/>
+            <Dropdown.Menu scrolling>
+                {tagOptions.map(option => <Dropdown.Item key={option.value} {...option} />)}
+            </Dropdown.Menu>
+        </Dropdown.Menu>
+    </Dropdown>
+);
 
 class PokemonIndex extends Component {
     constructor(props) {
@@ -37,6 +59,7 @@ class PokemonIndex extends Component {
         this.isActiveHeart();
         this.isActiveElement();
     }
+
 
     isActiveElement() {
         const divs = document.getElementsByClassName('card-body');
@@ -88,19 +111,21 @@ class PokemonIndex extends Component {
                     _.includes(id, pok.pkdx_id)
             );
             const selectedPok = selectedPoks[0];
-            console.log(selectedPok);
+
             const char = (
-                <div className="card">
+                <div className="card border border-dark pok-info-card" style={{height: '48%'}}>
                     <div className="card-body">
                         <img className="card-img-top border border-primary rounded-0"
                              src={IMG}
                              alt="Card image cap"/>
                         <h2>{selectedPok.name + " #" + selectedPok.pkdx_id}</h2>
-                        <table className="table table-sm">
+                        <table className="table table-sm table-bordered">
                             <thead>
                             <tr>
                                 <th>Type</th>
-                                <th>{_.capitalize(selectedPok.types[0].name) +" " + _.capitalize(selectedPok.types[1].name)}</th>
+                                <th>{selectedPok.types.map(type =>
+                                    _.capitalize(type.name) + ' '
+                                )}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -141,42 +166,56 @@ class PokemonIndex extends Component {
                     </div>
                 </div>
             );
-            this.setState({char : char});
+            this.setState({char: char});
+            const info_block = document.getElementsByClassName('post-wrapper');
+            info_block[0].classList.add('mediaTop');
         }
     }
 
     render() {
         return (
-            <div >
+            <div>
                 <div className="header">
                     <a className="btn btn-primary" id="link" href="/favourites">Favourites</a>
                     <div className="head-page border border-dark">
                         <h3 id="main-header">Pokedex</h3>
                     </div>
                 </div>
+                <div className="header" style={{marginBottom: '10px', width: '70%'}}>
+                    <MuiThemeProvider>
+                        <BottomNavigation selectedIndex={this.state.selectedIndex}>
+                            <BottomNavigationItem
+                                label="Recents"
+                                icon={recentsIcon}
+                                onClick={() => this.select(0)}
+                            />
+                            <BottomNavigationItem
+                                label="Favorites"
+                                icon={favoritesIcon}
+                                onClick={() => this.select(1)}
+                            />
+                        </BottomNavigation>
+                    </MuiThemeProvider>
+                    {DropdownExampleSearchInMenu()}
 
-                <MuiThemeProvider>
-                    <BottomNavigation selectedIndex={this.state.selectedIndex}>
-                        <BottomNavigationItem
-                            label="Recents"
-                            icon={recentsIcon}
-                            onClick={() => this.select(0)}
-                        />
-                        <BottomNavigationItem
-                            label="Favorites"
-                            icon={favoritesIcon}
-                            onClick={() => this.select(1)}
-                        />
-                    </BottomNavigation>
-                </MuiThemeProvider>
-                <div className="post-wrapper">
-                    {this.renderPokemons()}
-                    <button onClick={this.renderInfo} type="button"
-                            className="btn btn-primary btn-lg btn-block load-btn">Load more
-                    </button>
                 </div>
-                <div className="d-flex justify-content-end pok-info">
-                {this.state.char}
+
+
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="post-wrapper
+                        col-xl-5 col-lg-6 col-md-12 col-sm-12">
+
+                            {this.renderPokemons()}
+                            <button onClick={this.renderInfo} type="button"
+                                    className="btn btn-primary btn-lg btn-block load-btn">Load more
+                            </button>
+                        </div>
+                        <div className="d-flex justify-content-end pok-info
+                        col-xl-7  col-lg-6 col-md-12 col-sm-12">
+                            {this.state.char}
+                        </div>
+                    </div>
                 </div>
             </div>
         )

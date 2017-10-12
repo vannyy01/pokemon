@@ -1,7 +1,9 @@
 @font-face  {
-  font-family: icomoon;
-  src: url('../icomoon/icomoon.svg#icomoon') format('svg'),
-url('../icomoon/icomoon.woff') format('woff');
+  font-family: 'list-icons';
+  src: url(../fonts/icomoon.svg#icomoon) format('svg'),
+          url('../fonts/icomoon.woff') format('woff');
+  font-style: normal;
+  font-weight: 400;
 }
 body {
   margin: 0;
@@ -12,6 +14,43 @@ body {
 
 #root{
 
+}
+.list-icon{
+  font-family: 'list-icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+.list-icon:before{
+  content: '\e901';
+}
+.fav-icon {
+  font-family: 'list-icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+.fav-icon:before{
+  content: '\e9da';
 }
 .main {
   display: flex;
@@ -35,19 +74,26 @@ body {
   height: 50px;
 }
 
+@media (max-width:991px) {
+  .mediaTop{ top: 790px;}
+  .pok-info{position: absolute;}
+  .card {
+    height: 30%;
+    max-width: 49% !important;
+  }
 
+  }
 .post-wrapper {
-  width: 56%;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   flex-direction: row;
-  max-height: 100vh;
-  margin: 10px 5px 10px 20px;
+  height: 7%;
 }
 
+
 .pok-info {
-  width: 90%;
+  width: 100%;
 }
 
 .card-img-top{
@@ -56,13 +102,21 @@ body {
 
 }
 
+.pok-info-card{
+  min-height: 48%;
+
+}
+
 .card {
   height: 30%;
-  width: 20%;
+ max-width: 32%;
   text-align: center;
-  min-width: 30%;
+  min-width: 20%;
   min-height: 20%;
-  margin: 0 5px 15px 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3px;
+  margin-bottom: 3px;
 }
 
 
@@ -82,7 +136,7 @@ body {
 }
 
 .btn {
-  margin-right: .5rem;
+  //margin-right: .5rem;
 }
 .active-el {
   background-color: #e9dddc;
