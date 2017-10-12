@@ -6,6 +6,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import promise from 'redux-promise';
 
 import reducers from "./reducers";
+import Main from './components/main';
 import PokemonIndex from './components/posts_index';
 import PokemonFavour from './components/post_favour';
 
@@ -19,15 +20,16 @@ class App extends Component {
             <Provider store={createStoreWithMiddleware(reducers)}>
                 <BrowserRouter>
                     <div>
+                        <Main/>
                         <Switch>
-                            <Route exact path="/" component={PokemonIndex}/>
+                            <Route path="/all" component={PokemonIndex}/>
                             <Route path="/favourites" component={PokemonFavour}/>
                         </Switch>
                     </div>
                 </BrowserRouter>
             </Provider>
-    )
+        )
     }
-    }
+}
 
-    export default App;
+export default App;

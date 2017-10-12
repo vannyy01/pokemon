@@ -67,6 +67,12 @@ body {
   justify-content:center;
 }
 
+.header-2{
+  margin-left: 36.5%;
+  max-width: 400px;
+  margin-bottom: 10px;
+}
+
 .head-page {
   margin-top: 15px;
   margin-bottom: 20px;
@@ -75,14 +81,48 @@ body {
 }
 
 @media (max-width:991px) {
-  .mediaTop{ top: 790px;}
-  .pok-info{position: absolute;}
-  .card {
-    height: 30%;
-    max-width: 49% !important;
+  .mediaTop {
+    top: 670px;
   }
 
+  .pok-info {
+    position: absolute;
   }
+
+  .card {
+    height: 30%;
+    max-width: 30% !important;
+  }
+}
+
+  @media (max-width:600px) {
+    .mediaTop {
+      top: 670px;
+    }
+.header-2{
+  min-width: 50%;
+  margin-left: -4%
+}
+.load-btn{
+  width: 56%;
+  margin-left: 22%;
+}
+    .pok-info {
+      position: absolute;
+    }
+    .pok-info-card{
+      left: -30px;
+    }
+.post-wrapper{
+  left: -30px;
+  margin-bottom: 10px
+}
+    .card {
+      height: 30%;
+      max-width: 55% !important;
+    }
+  }
+
 .post-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -135,8 +175,8 @@ body {
   justify-content: flex-start;
 }
 
-.btn {
-  //margin-right: .5rem;
+.btn-m {
+  margin-right: 8px;
 }
 .active-el {
   background-color: #e9dddc;

@@ -5,55 +5,28 @@ import {fetchPost} from "../actions/fetch";
 import {fetchImg} from "../actions/fetchImg";
 import SelectedPoks from '../selectors/selected_poks';
 import Post from './post';
-
-
+import renderInfo from './info';
+import {isActiveElement, isActiveHeart} from './isActives';
 
 class PokemonFavour extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            counterActiveElements: 0,
-            class: 'active-el'
-        };
-
-        this.isActiveHeart.bind(this);
-        this.isActiveElement = this.isActiveElement.bind(this);
+        isActiveHeart.bind(this);
+        this.isActiveElement = isActiveElement.bind(this);
+        this.renderInfo = renderInfo.bind(this);
     }
+
+    state = {
+        char: '',
+    };
 
     componentWillMount() {
         this.props.fetchPost();
     }
 
     componentDidUpdate() {
-        this.isActiveHeart();
-        this.isActiveElement();
-    }
-
-    isActiveElement() {
-        const divs = document.getElementsByClassName('card-body');
-        const active = document.getElementsByClassName('active-el') || '[]';
-        for (let i = 0; i < divs.length; i++) {
-            divs[i].onclick = function (e) {
-                if (active.length < 1 && e.target.id === this.id) {
-                    this.classList.add('active-el');
-                } else if (active.length >= 1 && e.target.id === this.id) {
-                    this.classList.remove('active-el');
-                }
-            }
-        }
-    }
-
-    isActiveHeart() {
-        let fav_poks = localStorage.getItem('fav_poks') || '[]';
-        fav_poks = JSON.parse(fav_poks);
-        let div_poks = document.querySelectorAll("svg[id^='pok-']");
-        for (let i = 0; i < div_poks.length; i++) {
-
-            if (true === fav_poks.includes(div_poks[i].id)) {
-                let object = document.getElementById(div_poks[i].id);
-                object.setAttribute("fill", "#f72e2e");
-            }
-        }
+        this.isActiveHeart = isActiveHeart();
+        this.isActiveElement = isActiveElement();
     }
 
     renderPokemons() {
@@ -68,31 +41,28 @@ class PokemonFavour extends Component {
         );
     }
 
-
-
     render() {
         return (
             <div>
-                <div className="header">
-                    <a className="btn btn-primary" id="link" href="/favourites">Favourites</a>
-                    <div className="head-page border border-dark">
-                        <h3 id="main-header">Liked poks</h3>
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="post-wrapper
+                        col-xl-5 col-lg-6 col-md-12 col-sm-12">
+                            {this.renderPokemons()}
+                            <button onClick={() => this.setState({char: this.renderInfo(this.props.pokemons)})}
+                                    type="button"
+                                    className="btn btn-primary btn-lg btn-block load-btn">Load more
+                            </button>
+                        </div>
+                        <div className="d-flex justify-content-end pok-info
+                        col-xl-7  col-lg-6 col-md-12 col-sm-12">
+                            {this.state.char}
+                        </div>
                     </div>
-                </div>
-                <div className="post-wrapper">
-                    {this.renderPokemons()}
                 </div>
             </div>
         )
     }
-/**render(){
-    return(
-        <div>
-            <h2>Favourite pokemons</h2>
-        </div>
-    )
-
-    }**/
 }
 
 function mapStateToProps(state) {

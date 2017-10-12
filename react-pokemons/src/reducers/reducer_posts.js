@@ -1,8 +1,5 @@
-import _ from "lodash";
 import {FETCH_POSTS} from "../actions/fetch";
 import {FETCH_IMG} from "../actions/fetchImg";
-
-const INITIAL_STATE = {pokemons: []};
 
 export default function (state = {}, action) {
     switch (action.type) {
